@@ -55,6 +55,16 @@ describe "expect { ... }.to change(actual, message)" do
     end
   end
 
+  context "with an IO stream" do
+    it "fails when the stream does not change" do
+      pending "This is very confusing...not sure what's going on here"
+      expect {
+        k = STDOUT
+        expect { }.to change { k }
+      }.to fail_with(/expected result to have changed/)
+    end
+  end
+
   context "with nil value" do
     before(:each) do
       @instance = SomethingExpected.new
@@ -212,6 +222,14 @@ describe "expect { ... }.to change { block }" do
 
   it "provides a #description" do
     expect(change { @instance.some_value }.description).to eq "change result"
+  end
+
+  context "with an IO stream" do
+    it "passes when the stream does not change" do
+      pending "This is very confusing...not sure what's going on here"
+      k = STDOUT
+      expect { }.not_to change { k }
+    end
   end
 end
 
